@@ -27,7 +27,7 @@ public class OrdersDB {
                 connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
                 initDB();
 
-                while(true){
+                while (true) {
 
                     System.out.println("Enter 1 to add client");
                     System.out.println("Enter 2 to add random clients");
@@ -38,7 +38,7 @@ public class OrdersDB {
 
                     String s = scanner.nextLine();
 
-                    switch (s){
+                    switch (s) {
                         case "1":
                             addClient();
                             break;
@@ -57,20 +57,15 @@ public class OrdersDB {
                         default:
                             return;
                     }
-
                 }
-
-
             } finally {
                 scanner.close();
                 if (connection != null) connection.close();
             }
-
-        } finally {
-
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return;
         }
-
-
     }
 
     private static void addOrder() throws SQLException {
@@ -93,7 +88,6 @@ public class OrdersDB {
         int goodsid = Integer.parseInt(goodsidS);
 
         Order.addOrder(connection, orderDate, price, clientid, goodsid);
-
     }
 
     private static void addGoods() throws SQLException {
@@ -129,7 +123,6 @@ public class OrdersDB {
         String mail = scanner.nextLine();
 
         Client.addClient(connection, name, surName, phone, mail);
-
     }
 
     public static void addRandomClient() throws SQLException {
@@ -138,8 +131,6 @@ public class OrdersDB {
         System.out.println("Enter number of clients");
 
         Client.addRandomClient(connection, scanner.nextInt());
-
-
     }
 
     public static void initDB() throws SQLException {
@@ -165,7 +156,5 @@ public class OrdersDB {
         } finally {
             statement.close();
         }
-
     }
-
 }
